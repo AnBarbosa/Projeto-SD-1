@@ -27,7 +27,7 @@ public class RepositorioDePecas implements PartRepository {
 		{
 			int qtdeAtual = pecas.get(peca);
 			pecas.put(peca, qtdeAtual+1);
-		}
+		} 
 		else
 		{
 			pecas.put(peca, 1);
