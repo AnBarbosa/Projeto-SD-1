@@ -13,6 +13,7 @@ import base.model.Mensagens;
 
 public class Cliente {
 
+	private ExportableUIMethods logica = new ExportableUIMethods();
 	private boolean isRunning = true;
 	private Map<String, Runnable> mapaComandosSemArgumento = new HashMap<>();
 	private Map<String, Consumer<String>> mapaComandosComUmArgumento = new HashMap<>();
@@ -28,10 +29,13 @@ public class Cliente {
 	private void start() {
 		System.out.println(Mensagens.OLA_CLIENTE.texto);
 		abreInputScanner();
+		mapaComandosSemArgumento = logica.getMapaComandosSemArgumento();
+		mapaComandosComUmArgumento = logica.getMapaComandosComUmArgumento();
+		
 		
 		mapaComandosSemArgumento.put("exit", ()->this.exitClient());
 		mapaComandosSemArgumento.put("quit", ()->this.exitClient());
-		
+		//mapaComandosSemArgumento.put("help", ()->logica.help());
 		mapaComandosComUmArgumento.put("teste", (argumento)->this.exemplo(argumento));
 	}
 	
@@ -109,17 +113,25 @@ public class Cliente {
 				Runnable comando = mapaComandosSemArgumento.get(token);
 				comando.run();
 			} else {
-				System.out.println(token+": "+Mensagens.COMANDO_DESCONHECIDO.texto);
+				if(mapaComandosComUmArgumento.containsKey(token)) {
+					System.out.println(token+": "+Mensagens.ERRO_COMANDO_PEDE_UM_ARGUMENTO.texto);
+				} else {
+					System.out.println(token+": "+Mensagens.COMANDO_DESCONHECIDO.texto);
+				}
 			}
 		}
-			
+		
 		if(tamanho == 2) {
 			argumento = comandosAsList.get(1);
 			if(mapaComandosComUmArgumento.containsKey(token)) {
 				Consumer<String> comando = mapaComandosComUmArgumento.get(token);
 				comando.accept(argumento);
 			}  else {
-				System.out.println(token+" "+argumento+": "+Mensagens.COMANDO_DESCONHECIDO.texto);
+				if(mapaComandosSemArgumento.containsKey(token)) {
+					System.out.println(token+" *"+argumento+"*: "+Mensagens.ERRO_COMANDO_NAO_PRECISA_DE_ARGUMENTOS.texto);
+				} else {
+					System.out.println(token+" "+argumento+": "+Mensagens.COMANDO_DESCONHECIDO.texto);
+				}
 			}
 		}
 		

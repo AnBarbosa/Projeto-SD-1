@@ -10,6 +10,12 @@ public enum Mensagens {
 			), 
 	COMANDO_COM_MUITOS_ARGUMENTOS(
 			"Você digitou muita coisa. Nossos comandos não recebem tantos argumentos."
+			),
+	ERRO_COMANDO_PEDE_UM_ARGUMENTO(
+			"Esse comando pede um argumento. Tente novamente."
+			),
+	ERRO_COMANDO_NAO_PRECISA_DE_ARGUMENTOS(
+			"Esse comando não tem argumentos. Tente novamente."
 			);
 	
 	
