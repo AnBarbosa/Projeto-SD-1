@@ -80,9 +80,9 @@ public class StartClient {
 		AutoWiredCommands remoto = new ClientRMI();
 		
 		ClienteUI cliente;
-		//cliente = new ClienteUI(remoto, auto);
+		cliente = new ClienteUI(remoto, auto);
 		//cliente = new ClienteUI(remoto, manual);
-		cliente = new ClienteUI(local, auto);
+		//cliente = new ClienteUI(local, auto);
 		//cliente = new ClienteUI(local, manual);
 	
 		cliente.start();

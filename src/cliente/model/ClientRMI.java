@@ -37,6 +37,7 @@ public class ClientRMI extends AbstractClient {
 	@Override
 	public void connect(String repositorio) {
 		repositorioAtual = repositorio;
+		
 		try {
 			repositorioRemoto = (PartRepository) registry.lookup(repositorio);
 			System.out.println(Mensagens.CONEXAO_SUCESSO.texto);
@@ -47,6 +48,8 @@ public class ClientRMI extends AbstractClient {
 			System.err.println(Mensagens.CONEXAO_ERRO_REMOTE.texto+repositorio);
 			System.err.println(e.toString());
 		}
+		
+		dao.setRepositorio(repositorioRemoto);
 		System.out.println(Mensagens.TOKEN_FIM_DE_FUNCAO.texto);
 	}
 	

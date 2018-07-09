@@ -42,9 +42,9 @@ public abstract class AbstractClient extends AutoWiredCommands {
 	public void myPart() {
 		if(myPartValida()) {
 			String formato = "Parte Sob Edição: \n "
-					+ "Código: %s\n "
 					+ "Nome: %s\n "
-					+ "Repositorio: %s\n"
+					+ "Código: %s\n "
+					+ "Repositorio: %s\n "
 					+ "Descrição: %s\n "
 					+ "Componentes: %s\n ";
 			
@@ -53,8 +53,9 @@ public abstract class AbstractClient extends AutoWiredCommands {
 			{
 				sbComponentes.append(c.toString()+"\n");
 			}
-			System.out.printf(formato, myPart.getCode(), 
+			System.out.printf(formato, 
 										myPart.getNome(),
+										myPart.getCode(), 
 										myPart.getRepositorioDeOrigem(),
 										myPart.getDescricao(),
 										sbComponentes.toString());
@@ -81,7 +82,6 @@ public abstract class AbstractClient extends AutoWiredCommands {
 	}
 	
 	@Override public void repoListParts() {
-		
 		Map<Part, Integer> mapaPartes = dao.getMap();
 		
 		System.out.println("Listando Parts no Repositório "+repositorioAtual);

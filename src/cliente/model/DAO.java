@@ -15,16 +15,30 @@ public class DAO {
 	public void setRepositorio(PartRepository r) { repositorioRemoto = r; }
 	
 	public Map<Part, Integer> getMap() {
-		 Map<Part, Integer> mapaPartes = Collections.EMPTY_MAP;
+		 Map<Part, Integer> mapaPartes = Collections.emptyMap();
+
+		 if(repositorioRemotoInvalido()) {
+			 return mapaPartes;
+		 }
+		 
 		try {
 			mapaPartes = repositorioRemoto.getComponentsMap();
 		} catch (RemoteException e) {
-			System.out.println(Mensagens.CONEXAO_ERRO_REMOTE.texto);
+			System.out.println("[getMap: ]"+Mensagens.CONEXAO_ERRO_REMOTE.texto);
 		}
 		
 		return mapaPartes;
 	
 	}
+	
+	private boolean repositorioRemotoInvalido() {
+		if(!repositorioRemotoEhValido(repositorioRemoto)) {
+			System.err.println(Mensagens.REMOTE_REPO_ERRO_NAO_CONECTADO.texto);
+			return true;
+		};
+		return false;
+	}
+
 	
 	public boolean repositorioRemotoEhValido(PartRepository repositorio) { 
 		if(repositorio == null)
@@ -35,12 +49,16 @@ public class DAO {
 	}
 	
 	public Part getPart(String code) {
+		if(repositorioRemotoInvalido()) {
+			 return null;
+		 }
+		
 		Part p = null;
 		try {
 			p = repositorioRemoto.getPart(code);
 			
 		} catch (RemoteException e) {
-				System.out.println(Mensagens.ERROR_REMOTE_EXCEPTION.texto);
+				System.out.println("[getPart]: "+Mensagens.ERROR_REMOTE_EXCEPTION.texto);
 		} 
 		return p;
 	}
