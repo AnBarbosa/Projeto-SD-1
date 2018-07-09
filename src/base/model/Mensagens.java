@@ -20,7 +20,7 @@ public enum Mensagens {
 	CONEXAO_SUCESSO("Conectado com sucesso."), 
 	CONEXAO_ERRO_LOCATE("Não foi possível localizar um rmiregistry."), 
 	CONEXAO_ERRO_LOOKUP_NOT_BOUND("Não foi possível localizar o repositório: "), 
-	CONEXAO_ERRO_REMOTE("Erro remoto. "), 
+	CONEXAO_ERRO_REMOTE("Erro remoto não identificado."), 
 	REPO_LIST_ERRO_REMOTE("Não foi possível obter lista de repositórios."), 
 	TOKEN_FIM_DE_FUNCAO("---------------------"), 
 	MY_PART_CODIGO_VALUE("Será determinado ao adicionar a parte a um repositorio."), 
@@ -30,7 +30,9 @@ public enum Mensagens {
 	ADD_2_MYPART_ERRO_NOT_GRABBED("Você deve informar o código da peça, ou selecioná-la com grab."), 
 	GRAB_READ_TO_ADD("Adicione à my-part usando add-to-my-part."),
 	ERROR_REMOTE_EXCEPTION("Erro ao efetuar operação remota."), 
-	GRAB_ERROR_INFORMADO_TEXTO("Por favor, informe o nome da peça.");
+	GRAB_ERROR_INFORMADO_TEXTO("Por favor, informe o nome da peça."), 
+	REPOSITORIO_VAZIO("O repositorio atual está vazio."),
+	GRAB_PART_NOT_FOUND("A peca solicitada não existe.");
 	; 
 	
 	

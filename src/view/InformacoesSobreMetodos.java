@@ -1,4 +1,4 @@
-package cliente.model;
+package view;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -41,7 +41,7 @@ public class InformacoesSobreMetodos {
 		assert(metodos.length > 0);
 
 		for(Method m : metodos) {
-			if(m.isAnnotationPresent(cliente.abstracoes.ToUser.class))
+			if(m.isAnnotationPresent(ToUser.class))
 			{
 				exportaMetodo(m, uim);
 			}
@@ -140,7 +140,7 @@ public class InformacoesSobreMetodos {
 	private Method[] obtemTodosOsMetodosDaInterface() {
 		Method[] metodos = null;
 		try {
-			Class classe = cliente.abstracoes.UserInterfaceMethods.class;
+			Class classe = UserInterfaceMethods.class;
 			metodos = classe.getDeclaredMethods();
 			
 		} catch (Throwable e) {
@@ -158,12 +158,12 @@ public class InformacoesSobreMetodos {
 	private void exportaMetodo(Method m, UserInterfaceMethods uim)
 	{
 		boolean exportarAoUsuario = m.isAnnotationPresent(
-											cliente.abstracoes.ToUser.class);
+											ToUser.class);
 		if(!exportarAoUsuario) {
 			return;
 		}
 				 
-		ToUser info = (ToUser) m.getAnnotation(cliente.abstracoes.ToUser.class);
+		ToUser info = (ToUser) m.getAnnotation(ToUser.class);
 		
 		String nome = util.StringUtils.convertCamelCase(m.getName());
 		String descricao = info.descricao();
@@ -179,7 +179,8 @@ public class InformacoesSobreMetodos {
 					m.invoke(uim);
 				} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 					System.err.println("Erro ao invocar o método especificado.");
-					e.printStackTrace();
+					e.getCause().printStackTrace();
+					
 				}
 			});
 			ArrayList<String> helperS = new ArrayList();

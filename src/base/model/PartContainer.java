@@ -4,10 +4,16 @@ import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.IntStream;
 
 public class PartContainer implements PartRepository, Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private final String nome;
 	private Map<Part, Integer> pecas;
 	
@@ -27,7 +33,7 @@ public class PartContainer implements PartRepository, Serializable {
 	}
 
 	@Override
-	public long addPart(Part peca) {
+	public String addPart(Part peca) {
 		if(pecas.containsKey(peca))
 		{
 			int qtdeAtual = pecas.get(peca);
@@ -63,16 +69,46 @@ public class PartContainer implements PartRepository, Serializable {
 	}
 
 	@Override
-	public Part getPart(long code) throws RemoteException {
+	public Part getPart(String code) throws RemoteException {
 		for(Part p : pecas.keySet()) {
-			if(p.getCode() == code) {
+			if(p.getCode().equals(code)) {
 				return p;
 			}
 		}
 		return null;
 	}
 	
+	public boolean equals(Object cont)
+	{
+		if(cont == null) 						{			return false;}
+		if(!(cont  instanceof PartContainer)) 	{ return false; }
+
+		PartContainer b = (PartContainer) cont;
+		if(!(this.nome.equals(b.nome))) { return false;}
+		
+		Set<Part> bSet = b.pecas.keySet();
+		Set<Part> thisSet = this.pecas.keySet();
+		if(thisSet.equals(bSet)) {
+			for(Part pt : thisSet) {
+				if(this.pecas.get(pt) != b.pecas.get(pt)) { 
+					return false;
+				}
+			}
+		} else {
+			return false;
+		}
+
+		return true;
+	}
 	
-	
+	@Override
+	public int hashCode() {
+		int result = 17;
+		Set<Part> thisSet = this.pecas.keySet();
+		for(Part pt : thisSet) {
+			result = 31 * result + pt.getCode().hashCode();
+		}
+		return result;
+	}
 
 }

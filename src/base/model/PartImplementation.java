@@ -7,12 +7,11 @@ public class PartImplementation implements Part {
 
 	private static final long serialVersionUID = 1L;
 
-	private PartContainer container;
-	private long codigo;
 	private String nome;
-	private String repositorioOrigem;
-
-	private String descricao;
+	private PartContainer container;
+	private String codigo = "";
+	private String repositorioOrigem = "";
+	private String descricao = "";
 	
 	public PartImplementation(String nome) {
 		container = new PartContainer(nome);
@@ -24,7 +23,7 @@ public class PartImplementation implements Part {
 		this.codigo = p.codigo;
 		this.repositorioOrigem = p.repositorioOrigem;
 		this.descricao = p.descricao;
-		this.container = new PartContainer(container);
+		this.container = new PartContainer(p.container);
 		
 	}
 
@@ -36,12 +35,12 @@ public class PartImplementation implements Part {
 	
 
 	@Override
-	public void setCode(long code) {
+	public void setCode(String code) {
 		this.codigo = code;
 	}
 	
 	@Override
-	public long getCode() {
+	public String getCode() {
 		return codigo;
 	}
 
@@ -106,8 +105,35 @@ public class PartImplementation implements Part {
 	}
 	
 	public String toString() {
-		return String.format("%s [cód %d] - %s", nome, codigo, descricao);
+		return String.format("%s [cód %s] - %s", nome, codigo, descricao);
 	}
 
+	@Override
+	public boolean equals(Object b) {
+		if(b==null)
+			return false;
+		if(!(b instanceof PartImplementation)) {
+			return false;
+		}
+		
+		PartImplementation pB = (PartImplementation) b;
+		if(!(this.codigo.equals(pB.codigo))) {return false;}
+		if(!(this.nome.equals(pB.nome))) { return false; }
+		if(!(this.descricao.equals(pB.descricao))) { return false;}
+		if(!(this.repositorioOrigem.equals(pB.repositorioOrigem))) {return false;}
+		if(!(this.container.equals(pB.container))) { return false; }
+		return true;
+	}
 	
+	
+	public int hashCode() {
+		int result = 17;
+		result = 31 * result + codigo.hashCode();
+		result = 31 * result + nome.hashCode();
+		result = 31 * result + descricao.hashCode();
+		result = 31 * result + repositorioOrigem.hashCode();
+		result = 31 * result + container.hashCode();
+		return 0;
+	}
+
 }

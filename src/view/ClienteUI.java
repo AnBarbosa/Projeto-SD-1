@@ -1,4 +1,4 @@
-package cliente.model;
+package view;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -9,28 +9,33 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.function.Consumer;
 
+import cliente.model.ClientLocal;
+import cliente.model.ClientRMI;
 import base.model.Mensagens;
-import cliente.model.InformacoesSobreMetodos.TemParametro;
 
 public class ClienteUI {
 
-	private AutoWiredCommands userCommands = new ClientRMI();
 	private boolean isRunning = true;
-	
+	private AutoWiredCommands userCommands;
 	private Scanner inputScanner;
+
+	
+	public ClienteUI(AutoWiredCommands commandInterpreter) {
+		userCommands = commandInterpreter;
+		inputScanner = null;
+	}
+	
+	public ClienteUI(AutoWiredCommands commandInterpreter, Scanner inputs) {
+		userCommands = commandInterpreter;
+		inputScanner = inputs;
+	}
 
 	private Map<String, Runnable> mapaComandosSemArgumento = new HashMap<>();
 	private Map<String, Consumer<String>> mapaComandosComUmArgumento = new HashMap<>();
 	
-	public static void main(String [] args) {
-		ClienteUI c = new ClienteUI();
-		c.start();	
-		c.loop();
-		c.end();
-	}
-	
-	private void start() {
+	public void start() {
 		System.out.println(Mensagens.OLA_CLIENTE.texto);
+		isRunning = true;
 		abreInputScanner();
 		InformacoesSobreMetodos info = userCommands.getInformacoesSobreMetodos();
 		mapaComandosSemArgumento = info.getComandosSemArgumento();
@@ -44,7 +49,7 @@ public class ClienteUI {
 		*/
 	}
 	
-	private void loop() {
+	public void loop() {
 		while(isRunning) {
 			String comandosAsString = recebeInput();
 			List<String> comandosAsList = inputToList(comandosAsString);
@@ -52,7 +57,7 @@ public class ClienteUI {
 		}
 	}
 	
-	private void end() {
+	public void end() {
 		fechaInputScanner();
 		System.out.println("O programa terminou.");
 		
@@ -94,13 +99,21 @@ public class ClienteUI {
 	}
 
 	private void abreInputScanner() {
-		assert(inputScanner == null);
-		inputScanner = new Scanner(System.in);
-		
+		if(inputScanner == null) {
+			inputScanner = new Scanner(System.in);
+		}
 	}
 	
 	private void fechaInputScanner() {
 		inputScanner.close();
+	}
+	
+	private void executaComando(Runnable comando) {
+		comando.run();
+	}
+	
+	private void executaComando(Consumer<String> comando, String arg) {
+		comando.accept(arg);
 	}
 	
 	private void processaComandos(List<String> comandosAsList) {
@@ -113,10 +126,9 @@ public class ClienteUI {
 		
 		token = comandosAsList.get(0);
 		if(tamanho == 1) {
-			if(mapaComandosSemArgumento.containsKey(token))
-			{
-				Runnable comando = mapaComandosSemArgumento.get(token);
-				comando.run();
+			Runnable comando = mapaComandosSemArgumento.get(token);
+			if(comando != null) {
+				executaComando(comando);
 			} else {
 				if(mapaComandosComUmArgumento.containsKey(token)) {
 					System.out.println(token+": "+Mensagens.ERRO_COMANDO_PEDE_UM_ARGUMENTO.texto);
@@ -128,9 +140,9 @@ public class ClienteUI {
 		
 		if(tamanho == 2) {
 			argumento = comandosAsList.get(1);
-			if(mapaComandosComUmArgumento.containsKey(token)) {
-				Consumer<String> comando = mapaComandosComUmArgumento.get(token);
-				comando.accept(argumento);
+			Consumer<String> comando1arg = mapaComandosComUmArgumento.get(token);
+			if(comando1arg != null) {
+				executaComando(comando1arg, argumento);
 			}  else {
 				if(mapaComandosSemArgumento.containsKey(token)) {
 					System.out.println(token+" *"+argumento+"*: "+Mensagens.ERRO_COMANDO_NAO_PRECISA_DE_ARGUMENTOS.texto);
@@ -151,9 +163,9 @@ public class ClienteUI {
 			if(hasQuote) {
 				comandosAsList.remove(0);
 				argumento = String.join(" ", comandosAsList);
-				if(mapaComandosComUmArgumento.containsKey(token)) {
-					Consumer<String> comando = mapaComandosComUmArgumento.get(token);
-					comando.accept(argumento);
+				Consumer<String> comando1arg = mapaComandosComUmArgumento.get(token);
+				if(comando1arg != null) {
+					executaComando(comando1arg, argumento);
 				}  else {
 					if(mapaComandosSemArgumento.containsKey(token)) {
 						System.out.println(token+" *"+argumento+"*: "+Mensagens.ERRO_COMANDO_NAO_PRECISA_DE_ARGUMENTOS.texto);

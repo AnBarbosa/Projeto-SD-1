@@ -2,12 +2,11 @@ package base.model;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Map;
 
 public interface Part extends Serializable, Cloneable{
 
-	void setCode(long code);
-	public long getCode();
+	void setCode(String code);
+	public String getCode();
 	
 	public void setNome(String nome);
 	public String getNome();
@@ -39,8 +38,6 @@ public interface Part extends Serializable, Cloneable{
 			return String.format("%s(%d)", parte.getNome(), quantidade);
 		}
 	}
-
-	
 
 
 	

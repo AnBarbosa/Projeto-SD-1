@@ -1,7 +1,5 @@
 package util;
 
-import java.util.Arrays;
-
 public class StringUtils {
 
 	/** Adaptado da solução dada por polygenelubricants em questão do 

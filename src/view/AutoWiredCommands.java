@@ -1,17 +1,10 @@
-package cliente.model;
+package view;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.function.Consumer;
 
 import base.model.Mensagens;
 import cliente.abstracoes.UserInterfaceMethods;
-import cliente.model.InformacoesSobreMetodos.TemParametro;
-import cliente.abstracoes.ToUser;
+import view.InformacoesSobreMetodos.TemParametro;
 
 public class AutoWiredCommands extends UserInterfaceMethods {
 
