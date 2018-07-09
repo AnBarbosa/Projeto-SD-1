@@ -56,19 +56,20 @@ Um método exportado será exibido, junto com sua descrição, quando o usuário
 Um método exportado é utilizado pelo usuário através da linha de comando.
 Para invocá-lo, o cliente deve digitar o nome do método convertido de camelCase
 para small-hifen.
-    *Ex: o usuário chama o método myPart digitando* >> **my-part**
+    
+    Ex: o usuário chama o método myPart digitando >> my-part
   
 Se o método tiver algum parâmetro, esse deve ser informado logo após o comando, antes do usuário apertar enter.
     
-    *Ex: >> **connect servidor** -> equivale a connect("servidor");*
+    Ex: >> connect servidor -> equivale a connect("servidor");
  
 Se o usuário quiser informar uma String com espaços, deve utilizar aspas duplas "
  	
-	*Ex: >> set-descricao "Esse é um exemplo de descricao" *
+	Ex: >> set-descricao "Esse é um exemplo de descricao" -> setDescricao("\"Esse é um exemplo de descricao\"");
   
-OBS: Atualmente o ClienteController não trabalha bem com aspas. Ele irá manter as aspas quando entrar como argumento. Então, por exemplo, a descição acima seria equivalente a setDescrição("\"Esse é um exemplo de descricao\"").
+OBS: Atualmente o ClienteController não trabalha bem com aspas. Ele irá manter as aspas quando entrar como argumento.
 
-*Avaliar a possibilidade de concatenar tudo automaticamente como um segundo argumento.*
+**Avaliar a possibilidade de concatenar tudo automaticamente como um segundo argumento e não utilizar aspas.**
 
 ### ClienteController
 Essa classe recebe os inputs do usuário através de um Scanner, separa os comandos pelos espaços. 
