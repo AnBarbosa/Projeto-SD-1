@@ -1,15 +1,14 @@
 package servidor.model;
 
 import java.rmi.RemoteException;
-import java.rmi.server.UID;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import base.model.Part;
-import base.model.PartRepository;
+import base.model.interfaces.Part;
+import base.model.interfaces.PartRepository;
 
 public class RemoteRepo implements PartRepository {
 

@@ -1,5 +1,25 @@
-package cliente.abstracoes;
+package cliente.interfaces;
 
+import cliente.interfaces.anotacoes.ToUser;
+
+
+/**
+ * Os métodos dessa interface marcados como \@ToUser são exportados para 
+ * o usuário. 
+ * 
+ * Um método exportado deve:
+ *   1) Retornar void
+ *   2) Ter no máximo um parâmetro, que deve ser String.
+ * 
+ * Podemos adicionar mais funções ao usuário apenas incluindo a função nessa
+ * interface e anotando a função com \@ToUser. Devemos informar a descricao e
+ * os parâmetros para que eles sejam exibidos quando o usuário digitar help.
+ *
+ *   Veja interfaces.anotacoes.ToUser para mais informações. 
+ * 
+ * @author André Barbosa
+ *
+ */
 public abstract class UserInterfaceMethods {
 
 	// Funções gerais
@@ -20,7 +40,6 @@ public abstract class UserInterfaceMethods {
 	@ToUser(descricao="Conecta-se ao repositório escolhido.",
 			parametro="nomeDoServidor")
 	public abstract void connect(String servidor);
-	
 	
 	
 	// Funções my-part

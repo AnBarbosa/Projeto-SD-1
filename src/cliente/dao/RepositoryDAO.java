@@ -1,16 +1,15 @@
-package cliente.model;
+package cliente.dao;
 
 import java.rmi.RemoteException;
 import java.util.Collections;
 import java.util.Map;
 
-import base.model.Mensagens;
-import base.model.Part;
-import base.model.PartRepository;
+import base.model.interfaces.Part;
+import base.model.interfaces.PartRepository;
+import cliente.view.auxiliar.Mensagens;
 
-public class DAO {
-
-	protected PartRepository repositorioRemoto;
+public class RepositoryDAO {
+	private PartRepository repositorioRemoto;
 	
 	public void setRepositorio(PartRepository r) { repositorioRemoto = r; }
 	
@@ -30,24 +29,7 @@ public class DAO {
 		return mapaPartes;
 	
 	}
-	
-	private boolean repositorioRemotoInvalido() {
-		if(!repositorioRemotoEhValido(repositorioRemoto)) {
-			System.err.println(Mensagens.REMOTE_REPO_ERRO_NAO_CONECTADO.texto);
-			return true;
-		};
-		return false;
-	}
 
-	
-	public boolean repositorioRemotoEhValido(PartRepository repositorio) { 
-		if(repositorio == null)
-		{
-			return false;
-		}
-		return true;
-	}
-	
 	public Part getPart(String code) {
 		if(repositorioRemotoInvalido()) {
 			 return null;
@@ -62,4 +44,21 @@ public class DAO {
 		} 
 		return p;
 	}
+	
+	private boolean repositorioRemotoInvalido() {
+		if(repositorioRemoto==null) {
+			System.out.println(Mensagens.REMOTE_REPO_ERRO_NAO_CONECTADO.texto);
+			return true;
+		}
+		return false;
+	}
+
+	public boolean repositorioRemotoEhValido(PartRepository repositorio) { 
+		if(repositorio == null)
+		{
+			return false;
+		}
+		return true;
+	}
+	
 }

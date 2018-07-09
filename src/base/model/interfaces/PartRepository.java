@@ -1,4 +1,4 @@
-package base.model;
+package base.model.interfaces;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;

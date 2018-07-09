@@ -1,24 +1,46 @@
-package cliente.model;
+package cliente.view;
 
 import java.rmi.RemoteException;
 import java.util.Map;
 
-import base.model.Mensagens;
-import base.model.Part;
 import base.model.PartImplementation;
-import base.model.PartRepository;
-import base.model.Part.Componente;
-import view.AutoWiredCommands;
+import base.model.interfaces.Part;
+import base.model.interfaces.PartRepository;
+import base.model.interfaces.Part.Componente;
+import cliente.dao.RepositoryDAO;
+import cliente.view.auxiliar.Mensagens;
 
-public abstract class AbstractClient extends AutoWiredCommands {
+/**
+ *  Essa classe implementa as funções da AutoWiredReceiver, que podem
+ *  ser chamadas pelo usuário através de comandos na linha de comando.
+ *  
+ *  O resultado das solicitações do usuário são impressos no terminal.
+ *  
+ *  A conexão com o repositório é feita através do repositoryDAO, que
+ *  deve ser configurado por uma classe que extenda essa classe abstrata.
+ *  
+ *  As funções que podem ser invocadas estão descritas na interface 
+ *  UserInterfaceMethods.
+ *  
+ *  
+ *  OBS: Ainda há funções que não foram extraídas para o repositoryDAO,
+ *  elas funcionam contanto que o repositorioRemoto esteja corretamente
+ *  configurado.
+ *  
+ *  
+ * @author André Barbosa
+ *
+ */
+public abstract class AbstractClientView extends AutoWiredReceiver {
 	
 	protected Part myPart, grabbed;
 	protected String repositorioAtual;
 	protected PartRepository repositorioRemoto;
-	protected DAO dao;
+	protected RepositoryDAO repositoryDAO;
 	
-	public AbstractClient() {
-		dao = new DAO();
+	
+	public AbstractClientView() {
+		repositoryDAO = new RepositoryDAO();
 		prepareRepositories();
 	}
 	
@@ -27,19 +49,49 @@ public abstract class AbstractClient extends AutoWiredCommands {
 	public abstract void connect(String repositorio);
 	public abstract void repoList();
 	
+	
+	
+	// Funções auxiliares.
+	
+	private boolean myPartValida() { 
+		if(myPart == null)
+		{
+			System.out.println(Mensagens.MY_PART_ERRO_NAO_CRIADA.texto);
+			return false;
+		}
+		return true;
+	}
+	
+	/** 
+	 *  Verifica se o repositório não é nulo, e retorna mensagem de 
+	 *  erro caso.
+	 * @return
+	 */
+	private boolean repositorioRemotoEhValido() { 
+		if(repositorioRemoto!= null) {
+			return true;
+		} else {
+			System.out.println(Mensagens.REMOTE_REPO_ERRO_NAO_CONECTADO.texto);
+			return false;
+		}
+	}
+	
+
+	
+	
+	
 	// Os métodos abaixo representam as principais funções que valem para todos
 	// os clientes.
 	
-	@Override
-	public void newPart(String nome) {
+	
+	@Override public void newPart(String nome) {
 		myPart = new PartImplementation(nome);
 		System.out.println(Mensagens.NEW_PART_PARTE_CRIADA.texto+" "+nome);
 		System.out.println(Mensagens.TOKEN_FIM_DE_FUNCAO.texto);
 		
 	}
 	
-	@Override
-	public void myPart() {
+	@Override public void myPart() {
 		if(myPartValida()) {
 			String formato = "Parte Sob Edição: \n "
 					+ "Nome: %s\n "
@@ -59,30 +111,11 @@ public abstract class AbstractClient extends AutoWiredCommands {
 										myPart.getRepositorioDeOrigem(),
 										myPart.getDescricao(),
 										sbComponentes.toString());
-			
 		}
 		System.out.println(Mensagens.TOKEN_FIM_DE_FUNCAO.texto);
 	}
-	
-	private boolean myPartValida() { 
-		if(myPart == null)
-		{
-			System.out.println(Mensagens.MY_PART_ERRO_NAO_CRIADA.texto);
-			return false;
-		}
-		return true;
-	}
-	private boolean repositorioRemotoEhValido() { 
-		if(dao.repositorioRemotoEhValido(repositorioRemoto)) {
-			return true;
-		} else {
-			System.out.println(Mensagens.REMOTE_REPO_ERRO_NAO_CONECTADO.texto);
-			return false;
-		}
-	}
-	
 	@Override public void repoListParts() {
-		Map<Part, Integer> mapaPartes = dao.getMap();
+		Map<Part, Integer> mapaPartes = repositoryDAO.getMap();
 		
 		System.out.println("Listando Parts no Repositório "+repositorioAtual);
 
@@ -126,7 +159,7 @@ public abstract class AbstractClient extends AutoWiredCommands {
 	
 	@Override public void grab(String code) { 
 		if(repositorioRemotoEhValido()) {
-			Part p = dao.getPart(code);
+			Part p = repositoryDAO.getPart(code);
 			if(p==null) {
 				System.out.println(Mensagens.GRAB_PART_NOT_FOUND.texto);
 			}

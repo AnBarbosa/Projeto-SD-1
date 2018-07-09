@@ -1,4 +1,4 @@
-package base.model;
+package base.model.interfaces;
 
 import java.io.Serializable;
 import java.util.List;

@@ -1,4 +1,4 @@
-package base.model;
+package cliente.view.auxiliar;
 
 public enum Mensagens {
 	

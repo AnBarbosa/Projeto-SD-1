@@ -7,6 +7,14 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.IntStream;
 
+import base.model.interfaces.Part;
+import base.model.interfaces.PartRepository;
+
+/** Utilizada para armazenar os subitens da interface clientes.
+ * 
+ * @author André Barbosa
+ *
+ */
 public class PartContainer implements PartRepository, Serializable {
 
 	/**

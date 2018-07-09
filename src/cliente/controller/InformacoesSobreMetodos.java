@@ -1,4 +1,4 @@
-package view;
+package cliente.controller;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -9,9 +9,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
-import cliente.abstracoes.ToUser;
-import cliente.abstracoes.UserInterfaceMethods;
+import cliente.interfaces.UserInterfaceMethods;
+import cliente.interfaces.anotacoes.ToUser;
 
+/**
+ * Essa classe analisa, armazena e repassa as informações necessárias para que 
+ * as funções da interface UserInterfaceMethods marcadas com \@ToUser sejam
+ * exportadas.
+ * 
+ * @author André Barbosa
+ *
+ */
 public class InformacoesSobreMetodos {
 	private final Map<String, Runnable> comandosSemArgumento;
 	private final Map<String, Consumer<String>> comandosComArgumento;
@@ -125,7 +133,6 @@ public class InformacoesSobreMetodos {
 	}
 	
 	public String getHelptext(String metodo, TemParametro par) {
-		String formato, nome, descricao, parametro;
 		String retorno = "Não Encontrado Texto de Ajuda para esse método.";
 	
 		if(helptextContains(metodo, par)) {
@@ -140,7 +147,7 @@ public class InformacoesSobreMetodos {
 	private Method[] obtemTodosOsMetodosDaInterface() {
 		Method[] metodos = null;
 		try {
-			Class classe = UserInterfaceMethods.class;
+			Class<UserInterfaceMethods> classe = UserInterfaceMethods.class;
 			metodos = classe.getDeclaredMethods();
 			
 		} catch (Throwable e) {
@@ -183,7 +190,7 @@ public class InformacoesSobreMetodos {
 					
 				}
 			});
-			ArrayList<String> helperS = new ArrayList();
+			ArrayList<String> helperS = new ArrayList<String>();
 			helperS.add(nome);
 			helperS.add(descricao);
 			helptextSem.add(helperS);
@@ -196,7 +203,7 @@ public class InformacoesSobreMetodos {
 					System.err.println("Erro ao invocar o método especificado.");
 					e.printStackTrace();
 				}});
-			ArrayList<String> helperC = new ArrayList();
+			ArrayList<String> helperC = new ArrayList<String>();
 			helperC.add(nome);
 			helperC.add(descricao);
 			helperC.add(parametro);

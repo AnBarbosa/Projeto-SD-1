@@ -1,27 +1,32 @@
-package cliente.model;
+package cliente.view;
 
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import java.util.HashMap;
-import java.util.Map;
 
+import base.model.interfaces.PartRepository;
+import cliente.view.auxiliar.Mensagens;
 
-import base.model.Part;
-import base.model.Part.Componente;
-import base.model.PartImplementation;
-import base.model.PartRepository;
-
-import servidor.model.RemoteRepo;
-import view.AutoWiredCommands;
-import base.model.Mensagens;
-
-public class ClientRMI extends AbstractClient {
+/** Essa classe implementa os métodos preparaRepositories(),
+ * connect(String servidor) e repoList(), que interagem diretamente
+ * com os repositórios e configuram a repositorioDAO.
+ * 
+ *   A repositorioDAO é utilizada pela superclasse AbstractClientView 
+ * para implementar todas as outras funções às quais o usuário tem acesso, 
+ * de maneira transparente ao tipo de repositório utilizado.
+ *  
+ * @author André Barbosa
+ *
+ */
+public class ClienteRMI extends AbstractClientView {
 
 	
 	private Registry registry;
 	
+	/** Esse método obtem uma referência ao RMIREGISTRY
+	 *  e a insere no campo de classe registry.  
+	 */
 	@Override
 	protected void prepareRepositories() {
 		try {
@@ -33,7 +38,10 @@ public class ClientRMI extends AbstractClient {
 		}
 	}
 	
-	
+	/**
+	 * Esse método configura o repositoryDAO, obtendo a referência 
+	 * ao repositório remoto através do RMIRegistry
+	 */
 	@Override
 	public void connect(String repositorio) {
 		repositorioAtual = repositorio;
@@ -49,10 +57,15 @@ public class ClientRMI extends AbstractClient {
 			System.err.println(e.toString());
 		}
 		
-		dao.setRepositorio(repositorioRemoto);
+		// Após a conexão com o repositório, setamos o repositorioDAO.
+		repositoryDAO.setRepositorio(repositorioRemoto);
+		
 		System.out.println(Mensagens.TOKEN_FIM_DE_FUNCAO.texto);
 	}
 	
+	/** Essa função imprime na tela todos os servidores que estão
+	 * registrados na rmiregistry.
+	 */
 	@Override
 	public void repoList() {
 		final String[] repositorios;

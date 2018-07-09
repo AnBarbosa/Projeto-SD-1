@@ -6,8 +6,8 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Map;
 
-import base.model.Part;
-import base.model.PartRepository;
+import base.model.interfaces.Part;
+import base.model.interfaces.PartRepository;
 
 public class StartServer implements PartRepository {
 

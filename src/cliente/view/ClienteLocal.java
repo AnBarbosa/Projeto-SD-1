@@ -1,16 +1,15 @@
-package cliente.model;
+package cliente.view;
 
-import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import base.model.Mensagens;
 import base.model.PartContainer;
-import base.model.PartRepository;
+import base.model.interfaces.PartRepository;
+import cliente.view.auxiliar.Mensagens;
 import servidor.model.RemoteRepo;
 
-public class ClientLocal extends AbstractClient {
+public class ClienteLocal extends AbstractClientView {
 
 	private Map<String, PartRepository> testeLocal;
 		
@@ -27,7 +26,7 @@ public class ClientLocal extends AbstractClient {
 	public void connect(String repositorio) {
 		this.repositorioRemoto = testeLocal.get(repositorio);
 		repositorioAtual = repositorio;
-		this.dao.setRepositorio(repositorioRemoto);
+		this.repositoryDAO.setRepositorio(repositorioRemoto);
 		System.out.println(Mensagens.CONEXAO_SUCESSO.texto);
 		System.out.println(Mensagens.TOKEN_FIM_DE_FUNCAO.texto);
 	}

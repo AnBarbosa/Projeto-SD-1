@@ -3,6 +3,13 @@ package base.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import base.model.interfaces.Part;
+
+/**
+ * A implementação da interface Part, usada por todo o programa.
+ * @author André Barbosa
+ *
+ */
 public class PartImplementation implements Part {
 
 	private static final long serialVersionUID = 1L;
