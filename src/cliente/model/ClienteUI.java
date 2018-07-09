@@ -10,17 +10,20 @@ import java.util.Scanner;
 import java.util.function.Consumer;
 
 import base.model.Mensagens;
+import cliente.model.InformacoesSobreMetodos.TemParametro;
 
-public class Cliente {
+public class ClienteUI {
 
-	private ExportableUIMethods logica = new ExportableUIMethods();
+	private AutoWiredCommands userCommands = new ClientRMI();
 	private boolean isRunning = true;
+	
+	private Scanner inputScanner;
+
 	private Map<String, Runnable> mapaComandosSemArgumento = new HashMap<>();
 	private Map<String, Consumer<String>> mapaComandosComUmArgumento = new HashMap<>();
-	private Scanner inputScanner;
 	
 	public static void main(String [] args) {
-		Cliente c = new Cliente();
+		ClienteUI c = new ClienteUI();
 		c.start();	
 		c.loop();
 		c.end();
@@ -29,14 +32,16 @@ public class Cliente {
 	private void start() {
 		System.out.println(Mensagens.OLA_CLIENTE.texto);
 		abreInputScanner();
-		mapaComandosSemArgumento = logica.getMapaComandosSemArgumento();
-		mapaComandosComUmArgumento = logica.getMapaComandosComUmArgumento();
+		InformacoesSobreMetodos info = userCommands.getInformacoesSobreMetodos();
+		mapaComandosSemArgumento = info.getComandosSemArgumento();
+		mapaComandosComUmArgumento = info.getComandosComArgumento();
 		
 		
 		mapaComandosSemArgumento.put("exit", ()->this.exitClient());
 		mapaComandosSemArgumento.put("quit", ()->this.exitClient());
-		//mapaComandosSemArgumento.put("help", ()->logica.help());
-		mapaComandosComUmArgumento.put("teste", (argumento)->this.exemplo(argumento));
+		/*
+		mapaComandosComUmArgumento.put("exemplo", (argumento)->this.exemplo(argumento));
+		*/
 	}
 	
 	private void loop() {
@@ -136,7 +141,30 @@ public class Cliente {
 		}
 		
 		if(tamanho > 2) {
-			System.out.println(String.join(" ", comandosAsList)+": "+Mensagens.COMANDO_COM_MUITOS_ARGUMENTOS.texto);
+			boolean hasQuote = false;
+			for(String comando : comandosAsList) {
+				if ((comando).contains("\"")) {
+					hasQuote=true;
+					break;
+				}
+			}
+			if(hasQuote) {
+				comandosAsList.remove(0);
+				argumento = String.join(" ", comandosAsList);
+				if(mapaComandosComUmArgumento.containsKey(token)) {
+					Consumer<String> comando = mapaComandosComUmArgumento.get(token);
+					comando.accept(argumento);
+				}  else {
+					if(mapaComandosSemArgumento.containsKey(token)) {
+						System.out.println(token+" *"+argumento+"*: "+Mensagens.ERRO_COMANDO_NAO_PRECISA_DE_ARGUMENTOS.texto);
+					} else {
+						System.out.println(token+" "+argumento+": "+Mensagens.COMANDO_DESCONHECIDO.texto);
+					}
+				}
+			}
+			if(!hasQuote) {
+				System.out.println(String.join(" ", comandosAsList)+": "+Mensagens.COMANDO_COM_MUITOS_ARGUMENTOS.texto);
+			}
 		}
 	}
 

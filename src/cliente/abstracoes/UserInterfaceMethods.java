@@ -6,12 +6,16 @@ public abstract class UserInterfaceMethods {
 	@ToUser(descricao="Essa função exibe todos os comandos possíveis.")
 	public abstract void help();
 	
-	// Funções com servidor
+	@ToUser(descricao="Exibe todas as descricoes de um comando.",
+			parametro="comando")
+	public abstract void help(String comando);
+	
+	// Interação com o Servidor
 	@ToUser(descricao="Exibe a lista de repositorios existentes.")
 	public abstract void repoList();
 	
 	@ToUser(descricao="Lista todas as Parts no repositório ao qual está conectado")
-	public abstract void listPartsOnServer();
+	public abstract void repoListParts();
 	
 	@ToUser(descricao="Conecta-se ao repositório escolhido.",
 			parametro="nomeDoServidor")
@@ -35,7 +39,7 @@ public abstract class UserInterfaceMethods {
 	public abstract void getDescricao();
 	
 	
-	@ToUser(descricao="Seleciona a peca do repositorio atual com o código code. \n"
+	@ToUser(descricao="Seleciona a peca do repositorio atual com o código code. "
 			+ "Essa peça pode ser adicionada à myPart através do comando add-to-my-part",
 			parametro="codigo")
 	public abstract void grab(String code);
@@ -52,7 +56,7 @@ public abstract class UserInterfaceMethods {
 	
 	@ToUser(descricao="Adiciona my-part ao repositorio que está conectado.", 
 			parametro="")
-	public abstract void addMyPartToRepository();
+	public abstract void repoAdd();
 	
 	
 }

@@ -1,5 +1,7 @@
 package util;
 
+import java.util.Arrays;
+
 public class StringUtils {
 
 	/** Adaptado da solução dada por polygenelubricants em questão do 
@@ -39,4 +41,12 @@ public class StringUtils {
 		    }
 	}
 	*/
+	
+	public static String arrayToPrintableList(String [] array) {
+		StringBuilder sb = new StringBuilder();
+		for(String elemento : array) {
+			sb.append(elemento+"\n");
+		}
+		return sb.toString();
+	}
 }
