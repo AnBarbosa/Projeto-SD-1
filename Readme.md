@@ -33,10 +33,9 @@ Os comandos serão realizados pelor uma classe que extenda AutoWiredReceiver. At
 ### ClienteRMI 
 ClienteRMI é uma forma concreta da superclasse AbstractClientView.
 
- A AbstractClientView pode ser usada como modelo para qualquer AutoWiredReceiver, e implementa a interface UserInterfaceMethods. Os únicos métodos abstratos são
- aqueles que exigem a conexão com a rmiregistry. Esses métodos são implementados pela ClienteRMI.
+A AbstractClientView pode ser usada como modelo para qualquer AutoWiredReceiver, e implementa a interface UserInterfaceMethods. Os únicos métodos abstratos são aqueles que exigem a conexão com a rmiregistry. Esses métodos são implementados pela ClienteRMI.
  
- ### ClienteLocal
+### ClienteLocal
 ClienteLocal pode ser usado no lugar da ClienteRMI para testes, ele implementa o repositório no proprio cliente, e não faz chamadas pela registry.
 
 ### AbstractClientView
@@ -50,23 +49,22 @@ um dos comandos.
 
 
 ### Comandos e Métodos Exportados
-	Os comandos são interpretados pela classe ClienteController.
+Os comandos são interpretados pela classe ClienteController.
 
-    Um método exportado será exibido, junto com sua descrição, quando o usuário
-digitar 'help'.
+Um método exportado será exibido, junto com sua descrição, quando o usuário digitar 'help'.
  
-    Um método exportado é utilizado pelo usuário através da linha de comando.
+Um método exportado é utilizado pelo usuário através da linha de comando.
 Para invocá-lo, o cliente deve digitar o nome do método convertido de camelCase
 para small-hifen.
     *Ex: o usuário chama o método myPart digitando* >> **my-part**
   
-    Se o método tiver algum parâmetro, esse deve ser informado logo após o 
-comando, antes do usuário apertar enter.
+Se o método tiver algum parâmetro, esse deve ser informado logo após o comando, antes do usuário apertar enter.
+    
     *Ex: >> **connect servidor** -> equivale a connect("servidor");*
  
-    Se o usuário quiser informar uma String com espaços, deve utilizar aspas
-duplas "
- 	*Ex: >> set-descricao "Esse é um exemplo de descricao" *
+Se o usuário quiser informar uma String com espaços, deve utilizar aspas duplas "
+ 	
+	*Ex: >> set-descricao "Esse é um exemplo de descricao" *
   
 OBS: Atualmente o ClienteController não trabalha bem com aspas. Ele irá manter as aspas quando entrar como argumento. Então, por exemplo, a descição acima seria equivalente a setDescrição("\"Esse é um exemplo de descricao\"").
 
