@@ -33,7 +33,7 @@ public class ClienteLocal extends AbstractClientView {
 	
 	@Override
 	public void repoList() {
-		System.out.println("== Obtendo lista de servidores ==");
+		System.out.println("== Obtendo lista de repositórios ==");
 		final Set<String> repositorios = testeLocal.keySet();
 		repositorios.forEach(System.out::println);
 		System.out.println(Mensagens.TOKEN_FIM_DE_FUNCAO.texto);

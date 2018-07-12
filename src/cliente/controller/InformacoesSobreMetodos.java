@@ -11,6 +11,7 @@ import java.util.function.Consumer;
 
 import cliente.interfaces.UserInterfaceMethods;
 import cliente.interfaces.anotacoes.ToUser;
+import util.MsgUtils;
 
 /**
  * Essa classe analisa, armazena e repassa as informações necessárias para que 
@@ -151,7 +152,7 @@ public class InformacoesSobreMetodos {
 			metodos = classe.getDeclaredMethods();
 			
 		} catch (Throwable e) {
-			System.err.println("Erro ao obter lista de métodos.");
+			MsgUtils.errorPrintln("Erro ao obter lista de métodos.");
 			e.printStackTrace();
 		}
 		
@@ -172,7 +173,7 @@ public class InformacoesSobreMetodos {
 				 
 		ToUser info = (ToUser) m.getAnnotation(ToUser.class);
 		
-		String nome = util.StringUtils.convertCamelCase(m.getName());
+		String nome = converteNomeDoMetodoParaNomeDoComando(m.getName());
 		String descricao = info.descricao();
 		String parametro = info.parametro();
 		
@@ -185,7 +186,7 @@ public class InformacoesSobreMetodos {
 				try {
 					m.invoke(uim);
 				} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-					System.err.println("Erro ao invocar o método especificado.");
+					MsgUtils.errorPrintln("Erro ao invocar o método especificado.");
 					e.getCause().printStackTrace();
 					
 				}
@@ -200,7 +201,7 @@ public class InformacoesSobreMetodos {
 				try {
 					m.invoke(uim, argumentoPassado);
 				} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-					System.err.println("Erro ao invocar o método especificado.");
+					MsgUtils.errorPrintln("Erro ao invocar o método especificado.");
 					e.printStackTrace();
 				}});
 			ArrayList<String> helperC = new ArrayList<String>();
@@ -208,10 +209,14 @@ public class InformacoesSobreMetodos {
 			helperC.add(descricao);
 			helperC.add(parametro);
 			helptextCom.add(helperC);
-			//System.out.println("Lista Com: "+helpTextCom);
+			//MsgUtils.println("Lista Com: "+helpTextCom);
 			break;
 		} 
 		
 		
+	}
+	
+	private String converteNomeDoMetodoParaNomeDoComando(String nomeDoMetodo) {
+		return util.StringUtils.convertCamelCase(nomeDoMetodo);
 	}
 }

@@ -32,7 +32,8 @@ public enum Mensagens {
 	ERROR_REMOTE_EXCEPTION("Erro ao efetuar operação remota."), 
 	GRAB_ERROR_INFORMADO_TEXTO("Por favor, informe o nome da peça."), 
 	REPOSITORIO_VAZIO("O repositorio atual está vazio."),
-	GRAB_PART_NOT_FOUND("A peca solicitada não existe.");
+	GRAB_PART_NOT_FOUND("A peca solicitada não existe."), 
+	CONEXAO_BOUND_MAS_NAO_CONECTADO("O reposit�rio atual n�o pode ser acessado. Talvez esteja fora do ar. Contate seu administrador.");
 	; 
 	
 	

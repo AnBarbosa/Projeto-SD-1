@@ -7,9 +7,10 @@ import java.rmi.registry.Registry;
 
 import base.model.interfaces.PartRepository;
 import cliente.view.auxiliar.Mensagens;
+import util.MsgUtils;
 
 /** Essa classe implementa os métodos preparaRepositories(),
- * connect(String servidor) e repoList(), que interagem diretamente
+ * connect(String repositorio) e repoList(), que interagem diretamente
  * com os repositórios e configuram a repositorioDAO.
  * 
  *   A repositorioDAO é utilizada pela superclasse AbstractClientView 
@@ -32,7 +33,7 @@ public class ClienteRMI extends AbstractClientView {
 		try {
 			registry = LocateRegistry.getRegistry();
 		} catch (RemoteException e) {
-			System.err.println(Mensagens.CONEXAO_ERRO_LOCATE.texto);
+			MsgUtils.errorPrintln(Mensagens.CONEXAO_ERRO_LOCATE.texto);
 			e.printStackTrace();
 			System.exit(1);
 		}
@@ -48,37 +49,41 @@ public class ClienteRMI extends AbstractClientView {
 		
 		try {
 			repositorioRemoto = (PartRepository) registry.lookup(repositorio);
-			System.out.println(Mensagens.CONEXAO_SUCESSO.texto);
+			MsgUtils.println("Adicionado "+ repositorioRemoto.getName());
+			MsgUtils.println(Mensagens.CONEXAO_SUCESSO.texto);
 		} catch (NotBoundException e) {
-			System.err.println(Mensagens.CONEXAO_ERRO_LOOKUP_NOT_BOUND.texto+repositorio);
+			MsgUtils.errorPrintln(Mensagens.CONEXAO_ERRO_LOOKUP_NOT_BOUND.texto+repositorio);
 			
+		} catch (java.rmi.ConnectException conE) {
+			MsgUtils.errorPrintln(Mensagens.CONEXAO_BOUND_MAS_NAO_CONECTADO.texto);
 		} catch (RemoteException e) {
-			System.err.println(Mensagens.CONEXAO_ERRO_REMOTE.texto+repositorio);
-			System.err.println(e.toString());
+		
+			MsgUtils.errorPrintln(Mensagens.CONEXAO_ERRO_REMOTE.texto+" "+repositorio);
+			MsgUtils.errorPrintln(e.toString());
 		}
 		
 		// Após a conexão com o repositório, setamos o repositorioDAO.
 		repositoryDAO.setRepositorio(repositorioRemoto);
 		
-		System.out.println(Mensagens.TOKEN_FIM_DE_FUNCAO.texto);
+		MsgUtils.println(Mensagens.TOKEN_FIM_DE_FUNCAO.texto);
 	}
 	
-	/** Essa função imprime na tela todos os servidores que estão
+	/** Essa função imprime na tela todos os repositorios que estão
 	 * registrados na rmiregistry.
 	 */
 	@Override
 	public void repoList() {
 		final String[] repositorios;
-		System.out.println("== Obtendo lista de servidores ==");
+		MsgUtils.println("== Obtendo lista de repositórios ==");
 		try {
 			 repositorios = registry.list();
-			 System.out.println(util.StringUtils.arrayToPrintableList(repositorios));
+			 MsgUtils.println(util.StringUtils.arrayToPrintableList(repositorios));
 		} catch (RemoteException e) {
-			System.err.println(Mensagens.REPO_LIST_ERRO_REMOTE.texto);
-			System.err.println(e.toString());
+			MsgUtils.errorPrintln(Mensagens.REPO_LIST_ERRO_REMOTE.texto);
+			MsgUtils.errorPrintln(e.toString());
 		}
-		System.out.println(Mensagens.TOKEN_FIM_DE_FUNCAO.texto);
+		MsgUtils.println(Mensagens.TOKEN_FIM_DE_FUNCAO.texto);
 	}
-	
+
 
 }

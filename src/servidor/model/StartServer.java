@@ -1,5 +1,6 @@
 package servidor.model;
 
+import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -33,18 +34,35 @@ public class StartServer implements PartRepository {
 		try {
 			PartRepository stub = (PartRepository) UnicastRemoteObject.exportObject(repo, 0);
 			Registry registry = LocateRegistry.getRegistry();
-			registry.bind(repo.getName(), stub);
 			
-			System.out.println("Servidor "+repo.getName()+" adicionado ao rmiregistry.");
 			
-		} catch (Exception e) {
+			try {
+				registry.bind(repo.getName(), stub);
+				System.out.println("Servidor "+repo.getName()+" adicionado ao rmiregistry.");
+			} catch (AlreadyBoundException jaExistente)	{
+				try {
+					PartRepository teste = (PartRepository)  registry.lookup(repo.getName());
+					// Se já existir o repositório, será exibida a mensagem, senão iremos para o catch.
+					System.err.println("Não foi possível criar esse servidor pois já existe um servidor com nome "+teste.getName());
+				} catch (RemoteException re) { // Não conseguimos 
+						registry.unbind(repo.getName());
+						registry.bind(repo.getName(), stub);
+						System.out.println("Servidor "+repo.getName()+" sobrescrevendo nome inacessível no rmiregistry.");
+				}
+			}
+			
+		
+		}		catch (Exception e) {
+			
 			System.err.println("Houve um erro no servidor: "+e.toString());
 			System.exit(1);
 		}
 	}
 	
+	
+	
 	private void setShutdownRoutine() {
-		System.out.print("Preparando shutdown-hook..." );
+		System.out.print("Preparando shutdown-hook... " );
 		Runtime.getRuntime().addShutdownHook(new Thread(
 				()-> {
 					System.out.println("Saindo");

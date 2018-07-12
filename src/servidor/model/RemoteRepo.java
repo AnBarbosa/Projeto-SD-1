@@ -60,7 +60,7 @@ public class RemoteRepo implements PartRepository {
 	}
 
 	private String getNextCode() {
-		String uidStr = nome+(pecasNoRepositorio++); 
+		String uidStr = nome+"_"+(pecasNoRepositorio++); 
 		return uidStr;
 	}
 

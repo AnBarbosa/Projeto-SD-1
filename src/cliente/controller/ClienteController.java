@@ -11,6 +11,7 @@ import java.util.function.Consumer;
 
 import cliente.view.AutoWiredReceiver;
 import cliente.view.auxiliar.Mensagens;
+import util.MsgUtils;
 
 
 /**
@@ -45,7 +46,7 @@ public class ClienteController {
 	
 	// FUNCOES DE FLUXO 
 	public void start() {
-		System.out.println(Mensagens.OLA_CLIENTE.texto);
+		MsgUtils.println(Mensagens.OLA_CLIENTE.texto);
 		isRunning = true;
 		abreInputScanner();
 		InformacoesSobreMetodos info = userCommands.getInformacoesSobreMetodos();
@@ -70,7 +71,7 @@ public class ClienteController {
 	
 	public void end() {
 		fechaInputScanner();
-		System.out.println("O programa terminou.");
+		MsgUtils.println("O programa terminou.");
 	}
 
 
@@ -100,7 +101,7 @@ public class ClienteController {
 		} catch (NoSuchElementException noLine) {
 			tokens = "";
 		} catch (Exception e) {
-			System.err.println("Houve um erro ao receber o comando.");
+			MsgUtils.errorPrintln("Houve um erro ao receber o comando.");
 			e.printStackTrace();
 		}
 		
@@ -129,7 +130,7 @@ public class ClienteController {
 				listaDeTokens.add(parser.next());
 			}
 		} catch (Exception e) {
-			System.err.println("Erro ao processar token.");
+			MsgUtils.errorPrintln("Erro ao processar token.");
 			e.printStackTrace();
 		}
 		return listaDeTokens;
@@ -169,9 +170,9 @@ public class ClienteController {
 				// Verificamos se conhecemos um comando que leva argumento
 				if(mapaComandosComUmArgumento.containsKey(token)) {
 					// Se existir, exibimos uma mensagem
-					System.out.println(token+": "+Mensagens.ERRO_COMANDO_PEDE_UM_ARGUMENTO.texto);
+					MsgUtils.println(token+": "+Mensagens.ERRO_COMANDO_PEDE_UM_ARGUMENTO.texto);
 				} else { // Senão existir, exibimos outra mensagem
-					System.out.println(token+": "+Mensagens.COMANDO_DESCONHECIDO.texto);
+					MsgUtils.println(token+": "+Mensagens.COMANDO_DESCONHECIDO.texto);
 				}
 			}
 		}
@@ -190,10 +191,10 @@ public class ClienteController {
 				// Se existir um comando igual, que não leva argumentos
 				if(mapaComandosSemArgumento.containsKey(token)) {
 					// Exibimos uma mensagem de erro
-					System.out.println(token+" *"+argumento+"*: "+Mensagens.ERRO_COMANDO_NAO_PRECISA_DE_ARGUMENTOS.texto);
+					MsgUtils.println(token+" *"+argumento+"*: "+Mensagens.ERRO_COMANDO_NAO_PRECISA_DE_ARGUMENTOS.texto);
 				} else {
 					// Senão exibimos outra.
-					System.out.println(token+" "+argumento+": "+Mensagens.COMANDO_DESCONHECIDO.texto);
+					MsgUtils.println(token+" "+argumento+": "+Mensagens.COMANDO_DESCONHECIDO.texto);
 				}
 			}
 		}
@@ -220,14 +221,14 @@ public class ClienteController {
 					executaComando(comando1arg, argumento);
 				}  else {
 					if(mapaComandosSemArgumento.containsKey(token)) {
-						System.out.println(token+" *"+argumento+"*: "+Mensagens.ERRO_COMANDO_NAO_PRECISA_DE_ARGUMENTOS.texto);
+						MsgUtils.println(token+" *"+argumento+"*: "+Mensagens.ERRO_COMANDO_NAO_PRECISA_DE_ARGUMENTOS.texto);
 					} else {
-						System.out.println(token+" "+argumento+": "+Mensagens.COMANDO_DESCONHECIDO.texto);
+						MsgUtils.println(token+" "+argumento+": "+Mensagens.COMANDO_DESCONHECIDO.texto);
 					}
 				}
 			}
 			if(!hasQuote) {
-				System.out.println(String.join(" ", comandosAsList)+": "+Mensagens.COMANDO_COM_MUITOS_ARGUMENTOS.texto);
+				MsgUtils.println(String.join(" ", comandosAsList)+": "+Mensagens.COMANDO_COM_MUITOS_ARGUMENTOS.texto);
 			}
 		}
 	}
@@ -255,6 +256,6 @@ public class ClienteController {
 	
 	@SuppressWarnings("unused")
 	private void exemplo(String argumento) {
-		System.out.println("Chamada função teste com argumento: "+argumento);
+		MsgUtils.println("Chamada função teste com argumento: "+argumento);
 	}
 }

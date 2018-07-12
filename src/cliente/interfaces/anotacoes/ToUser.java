@@ -25,7 +25,7 @@ import java.lang.annotation.Target;
  *   
  *   Se o método tiver algum parâmetro, esse deve ser informado logo após o comando,
  * antes do usuário apertar enter.
- *       Ex: >> connect servidor -> equivale a connect("servidor"); 
+ *       Ex: >> connect repositorio -> equivale a connect("repositorio"); 
  *  
  *    Se o usuário quiser informar uma String com espaços, deve utilizar aspas
  *  duplas "

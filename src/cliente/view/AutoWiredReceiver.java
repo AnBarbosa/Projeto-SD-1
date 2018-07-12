@@ -21,7 +21,7 @@ import cliente.view.auxiliar.Mensagens;
  * @author André Barbosa
  *
  */
-public class AutoWiredReceiver extends UserInterfaceMethods {
+public abstract class AutoWiredReceiver extends UserInterfaceMethods {
 
 	private InformacoesSobreMetodos mInfo = new InformacoesSobreMetodos();
 
@@ -102,15 +102,15 @@ public class AutoWiredReceiver extends UserInterfaceMethods {
 	}
 
 	@Override
-	public void repoListParts() {
+	public void listp() {
 		// Espera-se que essa função seja sobreescrita pela AbstractClientView
 		System.out.println("Chamado listPartsOnServer");
 	}
 
 	@Override
-	public void connect(String servidor) {
+	public void connect(String repositorio) {
 		// Espera-se que essa função seja sobreescrita pela AbstractClientView
-		System.out.println("Chamado connect com arg " + servidor);
+		System.out.println("Chamado connect com arg " + repositorio);
 	}
 
 	@Override
@@ -145,21 +145,27 @@ public class AutoWiredReceiver extends UserInterfaceMethods {
 	}
 
 	@Override
-	public void addToMyPart() {
+	public void addMy() {
 		// Espera-se que essa função seja sobreescrita pela AbstractClientView
-		System.out.println("Chamado addToMyPart");
+		System.out.println("Chamado addMy");
 	}
 	
 	@Override
-	public void addToMyPart(String code) {
+	public void addMy(String code) {
 		// Espera-se que essa função seja sobreescrita pela AbstractClientView
-		System.out.println("Chamado addToMyPart com arg "+code);
+		System.out.println("Chamado addMy com arg "+code);
 	}
 
 	@Override
-	public void repoAdd() {
+	public void addRepo() {
 		// Espera-se que essa função seja sobreescrita pela AbstractClientView
-		System.out.println("Chamado addMyPartToRepository");
+		System.out.println("Chamado addRepo");
 	}
+
+	@Override
+	abstract public void addRepo(String repositorio);
+
+	@Override
+	abstract public void troca();
 
 }
