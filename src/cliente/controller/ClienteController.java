@@ -10,7 +10,7 @@ import java.util.Scanner;
 import java.util.function.Consumer;
 
 import cliente.view.AutoWiredReceiver;
-import cliente.view.auxiliar.Mensagens;
+import util.Mensagens;
 import util.MsgUtils;
 
 

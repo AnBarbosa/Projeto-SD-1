@@ -6,7 +6,7 @@ import java.util.Map;
 
 import base.model.interfaces.Part;
 import base.model.interfaces.PartRepository;
-import cliente.view.auxiliar.Mensagens;
+import util.Mensagens;
 
 public class RepositoryDAO {
 	private PartRepository repositorioRemoto;

@@ -6,8 +6,8 @@ import java.util.Set;
 
 import base.model.PartContainer;
 import base.model.interfaces.PartRepository;
-import cliente.view.auxiliar.Mensagens;
 import servidor.model.RemoteRepo;
+import util.Mensagens;
 
 public class ClienteLocal extends AbstractClientView {
 

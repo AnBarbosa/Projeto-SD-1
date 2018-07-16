@@ -9,7 +9,7 @@ import base.model.interfaces.PartRepository;
 import base.model.interfaces.Part.Componente;
 import cliente.dao.RepositoryDAO;
 import cliente.interfaces.anotacoes.ToUser;
-import cliente.view.auxiliar.Mensagens;
+import util.Mensagens;
 import util.MsgUtils;
 
 /**
@@ -225,12 +225,15 @@ public abstract class AbstractClientView extends AutoWiredReceiver {
 	public void troca() {
 		Part temp = myPart;
 		myPart = grabbed;
-		grabbed = myPart;
+		grabbed = temp;
+		MsgUtils.println("Trocando grabbed e my-part. Agora você está editando a peça "+myPart.getNome() );
 	}
 	
 	@Override
 	public void rename(String nome) {
+		String old = myPart.getNome();
 		myPart.setNome(nome);
+		MsgUtils.printf("Renomeada my-part de %s para %s\n",old, myPart.getNome() );
 	}
 	
 	

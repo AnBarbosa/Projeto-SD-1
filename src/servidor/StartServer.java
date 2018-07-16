@@ -1,4 +1,4 @@
-package servidor.model;
+package servidor;
 
 import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
@@ -9,6 +9,7 @@ import java.util.Map;
 
 import base.model.interfaces.Part;
 import base.model.interfaces.PartRepository;
+import servidor.model.RemoteRepo;
 
 public class StartServer implements PartRepository {
 

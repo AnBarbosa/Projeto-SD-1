@@ -5,7 +5,7 @@ import java.util.List;
 import cliente.controller.InformacoesSobreMetodos;
 import cliente.controller.InformacoesSobreMetodos.TemParametro;
 import cliente.interfaces.UserInterfaceMethods;
-import cliente.view.auxiliar.Mensagens;
+import util.Mensagens;
 
 /**
  *   Essa classe lê todos os métodos da interface UserInterfaceMethods

@@ -65,7 +65,7 @@ public abstract class UserInterfaceMethods {
 	
 	
 	@ToUser(descricao="\"Pega\" a peca do repositorio atual com o código code. "
-			+ "Essa peça pode ser adicionada à my-part através do comando addm, ou editada se o usuário usar o comando troca.",
+			+ "Essa peça pode ser adicionada à my-part através do comando add-my, ou editada se o usuário usar o comando troca.",
 			parametro="codigo")
 	public abstract void grab(String code);
 	
@@ -88,7 +88,7 @@ public abstract class UserInterfaceMethods {
 	public abstract void addRepo(String repositorio);
 	
 	
-	@ToUser(descricao="Troca a my-part e a peça \"pega\" usando grab, de forma a poder editar a peça \"grabbed\" ", 
+	@ToUser(descricao="Troca a my-part e a peça selecionada pelo grab, de forma a poder editar a peça \"grabbed\" ", 
 			parametro="")
 	public abstract void troca();
 	

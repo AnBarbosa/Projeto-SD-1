@@ -1,4 +1,4 @@
-package cliente.view.auxiliar;
+package util;
 
 public enum Mensagens {
 	
@@ -7,7 +7,7 @@ public enum Mensagens {
 	* OLA_CLIENTE -> cita comando help 
 	* MY_PART_ERRO_NAO_CRIADA -> cita comando new-part
 	* REMOTE_REPO_ERRO_NAO_CONECTADO -> cita comando connect <nome>
-	* 
+	* GRAB_READ_TO_ADD -> cita comando add-my
 	*/
 	OLA_CLIENTE(
 			"Bem vindo ao cliente. Digite \"help\", para obter a lista de comandos, ou digite o comando desejado."
@@ -28,12 +28,12 @@ public enum Mensagens {
 	NEW_PART_PARTE_CRIADA("Nova parte criada com sucesso."), 
 	REMOTE_REPO_ERRO_NAO_CONECTADO("Você não está conectado a nenhum repositório. Utilize \"connect <repositorio>\" para se conectar."),
 	ADD_2_MYPART_ERRO_NOT_GRABBED("Você deve informar o código da peça, ou selecioná-la com grab."), 
-	GRAB_READ_TO_ADD("Adicione à my-part usando add-to-my-part."),
+	GRAB_READ_TO_ADD("Adicione à my-part usando add-my."),
 	ERROR_REMOTE_EXCEPTION("Erro ao efetuar operação remota."), 
 	GRAB_ERROR_INFORMADO_TEXTO("Por favor, informe o nome da peça."), 
 	REPOSITORIO_VAZIO("O repositorio atual está vazio."),
 	GRAB_PART_NOT_FOUND("A peca solicitada não existe."), 
-	CONEXAO_BOUND_MAS_NAO_CONECTADO("O reposit�rio atual n�o pode ser acessado. Talvez esteja fora do ar. Contate seu administrador.");
+	CONEXAO_BOUND_MAS_NAO_CONECTADO("O reposit�rio atual n�o pode ser acessado. Talvez esteja fora do ar. Contate seu administrador.");
 	; 
 	
 	

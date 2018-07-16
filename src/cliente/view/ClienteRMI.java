@@ -6,7 +6,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
 import base.model.interfaces.PartRepository;
-import cliente.view.auxiliar.Mensagens;
+import util.Mensagens;
 import util.MsgUtils;
 
 /** Essa classe implementa os métodos preparaRepositories(),
